@@ -49,5 +49,10 @@ export const styles = StyleSheet.create({
         fontSize: 21,
         fontWeight: 'bold',
         color: '#FFF'
+    },
+    textEmpty: {
+      color: '#FFF',
+      fontSize: 22,
+      textAlign: 'center'
     }
 });

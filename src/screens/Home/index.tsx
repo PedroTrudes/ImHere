@@ -1,12 +1,17 @@
-import { Text, TextInput, View, TouchableOpacity } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, ScrollView, FlatList } from "react-native";
 import {styles} from './styles';
 import { Participant } from '../components/Participant';
 
 export function Home(){
+    const listParticipants = ['Pedro Trudes', 'Sara Silva', 'Bruna Prado', 'Lucas Prado', 'Ricardo Silk', 'Paulo Fonseca', 'Edy Braga', 'Wilton Silva'];
 
     function handleParticipantAdd(){
         window.alert('chamando funcao')
         console.log("chamando funcao")
+    }
+
+    function heandleParticipantRemove(user: string, age: number){
+        window.alert(`${user} de ${age} anos, removido`)
     }
 
     return(
@@ -28,9 +33,31 @@ export function Home(){
             <View style={styles.containerList}>
                 <Text style={styles.containerTextTitle}>Eventos</Text>
             </View>
-            <Participant />
-            <Participant />
-            <Participant />
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {listParticipants.map(participant => (
+                    <Participant key={participant} 
+                    user={participant} 
+                    onRemove={() => heandleParticipantRemove(participant, 24)} />
+
+                ))}
+
+            </ScrollView>
+            <FlatList 
+            data={listParticipants} 
+            keyExtractor={item => item} 
+            renderItem={({ item }) => (
+                <Participant 
+                key={item}
+                user={item}
+                onRemove={() => heandleParticipantRemove(item, 24)}
+                />
+            )}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={() => (
+                <Text style={styles.textEmpty} >Ninguém chegou no evento ainda</Text>
+            )}
+            />
+
         </View>
    )
 }; 
