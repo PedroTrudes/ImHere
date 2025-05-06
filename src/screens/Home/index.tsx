@@ -4,14 +4,16 @@ import { Participant } from '../components/Participant';
 import { useState } from "react";
 
 export function Home(){
-    const listParticipants = ['Pedro Trudes', 'Sara Silva', 'Bruna Prado', 'Lucas Prado', 'Ricardo Silk', 'Paulo Fonseca', 'Edy Braga', 'Wilton Silva'];
+    const [participants, setParticipants] = useState<string[]>([]);
+    const [participantName, setParticipantName] = useState('');
     
     function handleParticipantAdd(){
-        if(listParticipants.includes("Pedro ")){
+        if(participants.includes(participantName)){
             return Alert.alert('Participante já existe')
-        }else{
-            return Alert.alert('Participante cadastrado com sucesso')
         }
+        
+        setParticipants(prevState => [...prevState, participantName]);
+        setParticipantName('')
     }
 
     function heandleParticipantRemove(user: string, age: number){
@@ -38,17 +40,19 @@ export function Home(){
                 style={styles.input} 
                 placeholder="Ex: WebSummit"
                 placeholderTextColor={'#6b6b6b'}
+                onChangeText={text => setParticipantName(text)}
+                value={participantName}
                 />
                 <TouchableOpacity style={styles.button} onPress={handleParticipantAdd}>
                     <Text style={styles.buttonText}>Salvar</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.containerList}>
-                <Text style={styles.containerTextTitle}>Eventos</Text>
+                <Text style={styles.containerTextTitle}>Participantes</Text>
             </View>
  
             <FlatList 
-            data={listParticipants} 
+            data={participants} 
             keyExtractor={item => item} 
             renderItem={({ item }) => (
                 <Participant 
