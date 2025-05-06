@@ -1,4 +1,4 @@
-import { Text, TextInput, View, TouchableOpacity, ScrollView, FlatList } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, ScrollView, FlatList, Alert } from "react-native";
 import {styles} from './styles';
 import { Participant } from '../components/Participant';
 import { useState } from "react";
@@ -7,15 +7,24 @@ export function Home(){
     const listParticipants = ['Pedro Trudes', 'Sara Silva', 'Bruna Prado', 'Lucas Prado', 'Ricardo Silk', 'Paulo Fonseca', 'Edy Braga', 'Wilton Silva'];
     
     function handleParticipantAdd(){
-        window.alert('chamando funcao')
-        console.log("chamando funcao")
-        let names = useState('');
-        
-        listParticipants.push();
+        if(listParticipants.includes("Pedro ")){
+            return Alert.alert('Participante já existe')
+        }else{
+            return Alert.alert('Participante cadastrado com sucesso')
+        }
     }
 
     function heandleParticipantRemove(user: string, age: number){
-        window.alert(`${user} de ${age} anos, removido`)
+        Alert.alert('Remover', `Remover o participante ${user}?`, [
+            {
+                text: 'Sim',
+                onPress: () => Alert.alert('Deletado')
+            },
+            {
+                text: 'Não',
+                style: 'cancel'
+            }
+        ])
     }
 
     return(
